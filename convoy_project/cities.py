@@ -61,3 +61,6 @@ class Cities(object):
         if self.__discontent < 1:
             return "gameover"
         
+        
+        
+        
