@@ -30,18 +30,18 @@ class ConvoyControl(object):
         an event.
         '''
         for convoy in self.list_convoys:
-            if convoy.departure == game_time:  
-                convoy.running = 1
+            if convoy.get_departure() == game_time:  
+                convoy.set_running(1)
                 print "The convoy " + str(convoy.name) + " heads out."
                                      
-            elif convoy.arrive == game_time and convoy.convoy_running == 1:
+            elif convoy.get_arrive() == game_time and convoy.get_running() == 1:
                 print "The convoy " + str(convoy.name) + " came back."
-                convoy.convoy_running = 0
-                convoy.departure = None
-                convoy.arrive = None
-                convoy.targeted = 0
+                convoy.set_running(0)
+                convoy.set_departure(None)
+                convoy.set_arrive(None)
+                convoy.set_targeted(0)
             
-            elif convoy.convoy_running == 1:
+            elif convoy.get_running() == 1:
                 run = convoy.convoy_is_out(game_time)
                 
                 if run == "convoy_lost" or run == "sand_storm" or run == "raiders":
@@ -70,6 +70,14 @@ class ConvoyControl(object):
         '''
         prints the convoy's health.
         '''
-        convoy.targeted += 1
+        convoy.set_targeted(convoy.get_targeted() + 1) 
         print "The convoy has encounter an event: " + str(event) + "."
-        print str(convoy.health)
+        print "Convoy " + str(convoy.name) + " has " + str(convoy.health) + " points of health."
+    
+    
+    def set_convoy_times(self,name,departure,arrive):
+        
+        for convoy in self.list_convoys:
+            if convoy.name == name:
+                convoy.set_departure(departure)
+                convoy.set_arrive(arrive)

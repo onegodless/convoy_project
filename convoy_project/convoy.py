@@ -20,11 +20,11 @@ class Convoy(object):
         self.name= name
         self.health = health
         self.defense = 0 #attribute that makes the convoy lose less health in each event.
-        self.running = 0
+        self.__running = 0
         self.inst_events = Events()
-        self.departure = None #Time when the convoy has to departure from the city.
-        self.arrive = None#Time when the convoy comes back.
-        self.targeted = 0
+        self.__departure = None #Time when the convoy has to departure from the city.
+        self.__arrive = None#Time when the convoy comes back.
+        self.__targeted = 0
         self.__num_trucks = 0
         self.__num_escort = num_escorts
         self.__max_number = 20
@@ -35,6 +35,22 @@ class Convoy(object):
         
         return "data: " + str(self.__num_escort) + str(self.defense)
     
+    def set_running(self,running):
+        self.__running = running
+    def get_running(self):
+        return self.__running
+    def set_arrive(self,arrive):
+        self.__arrive = arrive
+    def get_arrive(self):
+        return self.__arrive
+    def set_departure(self,departure):
+        self.__departure = departure
+    def get_departure(self):
+        return self.__departure
+    def set_targeted(self,targeted):
+        self.__targeted = targeted
+    def get_targeted(self):
+        return self.__targeted
     def set_num_trucks(self, num_trucks):
         self.__num_trucks = num_trucks
     def get_num_trucks(self):
@@ -49,8 +65,7 @@ class Convoy(object):
         
     def convoy_is_out(self,game_time):
         
-        print "defense : " + str(self.defense)
-        event = self.inst_events.event_generator(game_time, self.targeted)
+        event = self.inst_events.event_generator(game_time, self.__targeted)
         if event == "convoy_lost":
             self.health -= 30 - self.defense#defense should be inserted here to damper the damage caused by the event.
             return "convoy_lost"
