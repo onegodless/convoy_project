@@ -51,11 +51,11 @@ class ConvoyControl(object):
                     self.dead_convoy(convoy) 
                 
     
-    def create_convoy(self,name,health,defense):
+    def create_convoy(self,name,health,num_escort):
         '''
         creates a convoy object and push it into the list
         '''    
-        new_convoy = Convoy(name,health,defense)
+        new_convoy = Convoy(name,health,num_escort)
         self.list_convoys.append(new_convoy)
     
     def dead_convoy(self,convoy):
@@ -71,6 +71,5 @@ class ConvoyControl(object):
         prints the convoy's health.
         '''
         convoy.targeted += 1
-        print convoy.targeted
         print "The convoy has encounter an event: " + str(event) + "."
         print str(convoy.convoy_health)

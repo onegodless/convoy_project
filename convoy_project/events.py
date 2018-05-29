@@ -32,8 +32,8 @@ class Events(object):
             
         elif game_time > 5 and game_time < 21:#at day is more probable for the convoy to get attacked or engulfed in a sandstorm.
             convoy_lost_probability = 10
-            raiders_probability = 20
-            sand_storm_probability = 40
+            raiders_probability = 40
+            sand_storm_probability = 30
          
         event_happens = random.randint(0,targeted + 5) 
         if event_happens >= 0 and event_happens <= 2:

@@ -16,7 +16,7 @@ if __name__ == '__main__':
     game_time = 12
     main_city = Cities("Nuka Town",20,20,20,100) #wood, oil, water, discontent.
     my_convoy_control = ConvoyControl()
-    my_convoy_control.create_convoy("Ellen",300,30) #name, health, defense.
+    my_convoy_control.create_convoy("Ellen",100,10) #name, health, number of escorts.
     my_convoy_control.list_convoys[0].departure = 13
     my_convoy_control.list_convoys[0].arrive = 12
     while True:
