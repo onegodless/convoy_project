@@ -21,25 +21,25 @@ class ConvoyControl(object):
         '''
         self.list_convoys = []
     
+    
     def time_control(self,game_time):
-        
+        '''time_control gets the game_time of each main cicle and compares it 
+        to time that the convoys on the list are supposed to head out or come
+        back to the city.
+        when a convoy is out, this function also checks if the convoys encounter
+        an event.
+        '''
         for convoy in self.list_convoys:
             if convoy.departure == game_time:  
-                run = convoy.convoy_is_out(game_time)
                 convoy.convoy_running = 1
                 print "The convoy " + str(convoy.convoy_name) + " heads out."
-                
-                if run == "convoy_lost" or run == "sand_storm" or run =="raiders":
-                    self.event_convoy(convoy,run)
-                
-                if convoy.check_health() == "dead":
-                    self.dead_convoy(convoy)
-                     
-            elif convoy.arrive == game_time:
+                                     
+            elif convoy.arrive == game_time and convoy.convoy_running == 1:
                 print "The convoy " + str(convoy.convoy_name) + " came back."
                 convoy.convoy_running = 0
                 convoy.departure = None
                 convoy.arrive = None
+                convoy.targeted = 0
             
             elif convoy.convoy_running == 1:
                 run = convoy.convoy_is_out(game_time)
@@ -52,15 +52,25 @@ class ConvoyControl(object):
                 
     
     def create_convoy(self,name,health,defense):
-        
+        '''
+        creates a convoy object and push it into the list
+        '''    
         new_convoy = Convoy(name,health,defense)
         self.list_convoys.append(new_convoy)
     
     def dead_convoy(self,convoy):
-        
+        '''
+        checks the health of the convoy, if it's dead, pops it out of the
+        list.
+        '''
         dead_convoy = self.list_convoys.pop()
         print "the convoy" + dead_convoy.convoy_name +  " is dead"
     
     def event_convoy(self,convoy,event):
-        print "The convoy has encounter an event."
+        '''
+        prints the convoy's health.
+        '''
+        convoy.targeted += 1
+        print convoy.targeted
+        print "The convoy has encounter an event: " + str(event) + "."
         print str(convoy.convoy_health)
