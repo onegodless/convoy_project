@@ -31,11 +31,11 @@ class ConvoyControl(object):
         '''
         for convoy in self.list_convoys:
             if convoy.departure == game_time:  
-                convoy.convoy_running = 1
-                print "The convoy " + str(convoy.convoy_name) + " heads out."
+                convoy.running = 1
+                print "The convoy " + str(convoy.name) + " heads out."
                                      
             elif convoy.arrive == game_time and convoy.convoy_running == 1:
-                print "The convoy " + str(convoy.convoy_name) + " came back."
+                print "The convoy " + str(convoy.name) + " came back."
                 convoy.convoy_running = 0
                 convoy.departure = None
                 convoy.arrive = None
@@ -64,7 +64,7 @@ class ConvoyControl(object):
         list.
         '''
         dead_convoy = self.list_convoys.pop()
-        print "the convoy" + dead_convoy.convoy_name +  " is dead"
+        print "the convoy" + dead_convoy.name +  " is dead"
     
     def event_convoy(self,convoy,event):
         '''
@@ -72,4 +72,4 @@ class ConvoyControl(object):
         '''
         convoy.targeted += 1
         print "The convoy has encounter an event: " + str(event) + "."
-        print str(convoy.convoy_health)
+        print str(convoy.health)

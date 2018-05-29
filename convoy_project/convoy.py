@@ -13,14 +13,14 @@ class Convoy(object):
     '''
 
 
-    def __init__(self,convoy_name="",convoy_health=100,num_escorts=0):
+    def __init__(self,name="",health=100,num_escorts=0):
         '''
         Constructor
         '''
-        self.convoy_name= convoy_name
-        self.convoy_health = convoy_health
-        self.convoy_defense = 0 #attribute that makes the convoy lose less health in each event.
-        self.convoy_running = 0
+        self.name= name
+        self.health = health
+        self.defense = 0 #attribute that makes the convoy lose less health in each event.
+        self.running = 0
         self.inst_events = Events()
         self.departure = None #Time when the convoy has to departure from the city.
         self.arrive = None#Time when the convoy comes back.
@@ -33,7 +33,7 @@ class Convoy(object):
     
     def __str__(self):
         
-        return "data: " + str(self.__num_escort) + str(self.convoy_defense)
+        return "data: " + str(self.__num_escort) + str(self.defense)
     
     def set_num_trucks(self, num_trucks):
         self.__num_trucks = num_trucks
@@ -49,26 +49,26 @@ class Convoy(object):
         
     def convoy_is_out(self,game_time):
         
-        print "defense : " + str(self.convoy_defense)
+        print "defense : " + str(self.defense)
         event = self.inst_events.event_generator(game_time, self.targeted)
         if event == "convoy_lost":
-            self.convoy_health -= 30 - self.convoy_defense#defense should be inserted here to damper the damage caused by the event.
+            self.health -= 30 - self.defense#defense should be inserted here to damper the damage caused by the event.
             return "convoy_lost"
         elif event == "raiders": 
-            self.convoy_health -= 40 - self.convoy_defense#defense should be inserted here to damper the damage caused by the event.
+            self.health -= 40 - self.defense#defense should be inserted here to damper the damage caused by the event.
             return "raiders"
         elif event == "sand_storm":
-            self.convoy_health -= 25 - self.convoy_defense#defense should be inserted here to damper the damage caused by the event.
+            self.health -= 25 - self.defense#defense should be inserted here to damper the damage caused by the event.
             return "sand_storm"
             
             
     def check_health(self):
         
-        if self.convoy_health <= 0:
+        if self.health <= 0:
             return "dead"  
     
     
     def calculate_defense(self):
         
-        self.convoy_defense = self.__num_escort * 2
+        self.defense = self.__num_escort * 2
         
